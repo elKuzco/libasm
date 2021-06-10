@@ -1,0 +1,5 @@
+.DS_Store
+.o
+.gdb_history
+libasm.a
+a.out
