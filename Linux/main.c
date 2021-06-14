@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qlouisia <qlouisia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 17:26:18 by qlouisia          #+#    #+#             */
-/*   Updated: 2021/06/11 17:26:19 by qlouisia         ###   ########.fr       */
+/*   Updated: 2021/06/14 11:36:28 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
+#include <fcntl.h>
+
 
 void test_strlen (void)
 {
@@ -57,12 +60,66 @@ void test_strcmp(void)
 
 void test_write(void)
 {
-    
+    printf("\n#### FT_WRITE ####\n");
     printf("ft_write :\n");
     ft_write(1,"Hello\n",6);
-    
     printf("write :\n");
     write(1,"Hello\n",6);
+
+    printf("\nHandle Errno :\n");
+    
+    printf("Bad File Descriptor :\n");
+    errno = 0;
+    ft_write(-1,"Hello\n",6);
+    printf("The error message is : %s\n", strerror(errno));
+    errno = 0;
+    write(-1,"Hello\n",6);
+    printf("The error message is : %s\n", strerror(errno));
+
+    printf("\nBad Address :\n");
+    errno = 0;
+    ft_write(1,"Hello\n",-1);
+    printf("The error message is : %s\n", strerror(errno));
+    errno = 0;
+    write(1,"Hello\n",-1);
+    printf("The error message is : %s\n", strerror(errno));
+}
+
+void test_read(void)
+{
+    printf("\n#### FT_READ ####\n");
+    int fd;
+    char str[60];
+    fd = open("./main.c", O_RDONLY);
+    
+    
+    printf("ft_read :\n");
+    ft_read(fd,str,60);
+    printf("%s\n",str);
+    printf("read :\n");
+    
+    memset(str,"\0",60);
+    fd = open("./main.c", O_RDONLY);
+    read(fd,str,60);
+    printf("%s\n",str);
+
+    printf("\nHandle Errno :\n");
+    
+    printf("Bad File Descriptor :\n");
+    errno = 0;
+    ft_read(-1,str,6);
+    printf("The error message is : %s\n", strerror(errno));
+    errno = 0;
+    read(-1,str,6);
+    printf("The error message is : %s\n", strerror(errno));
+
+    printf("\nBad Address :\n");
+    errno = 0;
+    ft_read(1,str,-1);
+    printf("The error message is : %s\n", strerror(errno));
+    errno = 0;
+    read(1,str,-1);
+    printf("The error message is : %s\n", strerror(errno));
 }
 
 int main (void)
@@ -71,4 +128,7 @@ int main (void)
     test_strcpy();
     test_strcmp();
     test_write();
+    test_read();
 }
+// gcc -no-pie main.c libasm.a
+// ./a.out

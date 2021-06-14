@@ -1,21 +1,21 @@
 ;# **************************************************************************** #
 ;#                                                                              #
 ;#                                                         :::      ::::::::    #
-;#    ft_write.s                                         :+:      :+:    :+:    #
+;#    ft_read.s                                          :+:      :+:    :+:    #
 ;#                                                     +:+ +:+         +:+      #
-;#    By: qlouisia <qlouisia@student.42.fr>          +#+  +:+       +#+         #
+;#    By: kali <kali@student.42.fr>                  +#+  +:+       +#+         #
 ;#                                                 +#+#+#+#+#+   +#+            #
-;#    Created: 2021/06/11 17:24:20 by qlouisia          #+#    #+#              #
-;#    Updated: 2021/06/11 17:24:21 by qlouisia         ###   ########.fr        #
+;#    Created: 2021/06/14 11:20:34 by kali              #+#    #+#              #
+;#    Updated: 2021/06/14 11:22:53 by kali             ###   ########.fr        #
 ;#                                                                              #
 ;# **************************************************************************** #
 
 section .text
-global ft_write
+global ft_read
 extern __errno_location
 
-ft_write :
-    mov rax, 1
+ft_read :
+    mov rax, 0
     syscall
     cmp rax,0
     jl error
@@ -28,4 +28,3 @@ error :
     mov [rax], rdi
     mov rax, -1
     ret
-
