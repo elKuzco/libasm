@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 17:26:18 by qlouisia          #+#    #+#             */
-/*   Updated: 2021/06/14 11:36:28 by kali             ###   ########.fr       */
+/*   Updated: 2021/06/18 16:43:33 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void test_read(void)
     printf("%s\n",str);
     printf("read :\n");
     
-    memset(str,"\0",60);
+    memset(str,'\0',60);
     fd = open("./main.c", O_RDONLY);
     read(fd,str,60);
     printf("%s\n",str);
@@ -122,6 +122,13 @@ void test_read(void)
     printf("The error message is : %s\n", strerror(errno));
 }
 
+void test_strdup(void)
+{
+    printf("\n#### FT_STDUP ####\n");
+    printf("strdup : %s \n",ft_strdup("Hello World !"));
+    
+}
+
 int main (void)
 {
     test_strlen();
@@ -129,6 +136,7 @@ int main (void)
     test_strcmp();
     test_write();
     test_read();
+    test_strdup();
 }
 // gcc -no-pie main.c libasm.a
 // ./a.out
